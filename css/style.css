@@ -1,0 +1,89 @@
+/* Photo Gallery Styling */
+.photo-gallery {
+    margin: 15px 0;
+    text-align: center;
+}
+
+.photo {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+
+.photo:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.main-photo {
+    max-height: 200px;
+    width: auto;
+    border: 3px solid #ffb7c5;
+    margin-bottom: 10px;
+}
+
+.inline-photo {
+    max-height: 180px;
+    width: auto;
+    margin: 10px 0;
+    border: 2px solid #fce6b4;
+}
+
+.family-photo {
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    margin: 10px 0;
+}
+
+.family-collage {
+    margin: 15px 0;
+}
+
+.photo-pair {
+    display: flex;
+    gap: 12px;
+    margin: 15px 0;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.pair-photo {
+    flex: 1;
+    min-width: 120px;
+    max-height: 150px;
+    object-fit: cover;
+    border: 2px solid #ffe0f0;
+}
+
+/* Responsive adjustments for photos */
+@media (max-width: 480px) {
+    .photo-pair {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .pair-photo {
+        width: 100%;
+        max-height: 200px;
+    }
+    
+    .main-photo {
+        max-height: 150px;
+    }
+    
+    .inline-photo {
+        max-height: 140px;
+    }
+}
+
+/* Optional: Add a lightbox effect for photos */
+.photo {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* You can add a simple lightbox with JavaScript if desired */
