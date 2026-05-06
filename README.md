@@ -22,5 +22,3 @@ This project is a digital Mother's Day letter created as a personal tribute. It 
 - **HTML5** - Structure and content
 - **CSS3** - Styling, animations, and responsive design  
 - **JavaScript** - Interactivity and dynamic elements
-
-## 📁 File Structure
