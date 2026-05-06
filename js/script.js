@@ -11,18 +11,23 @@
         wrapper.classList.add('open');
         startConfettiExplosion();
         createFloatingHearts();
+        setTimeout(initPhotoLightbox, 200);
     }
 
-    // Event listeners
-    wrapper.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openLetter();
-    });
-
+    // Event listeners for Open button
     openBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         openLetter();
     });
+
+    // Optional: Click on envelope flap also opens
+    const flap = document.querySelector('.envelope-flap');
+    if(flap) {
+        flap.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openLetter();
+        });
+    }
 
     // Confetti System
     const canvas = document.getElementById('confettiCanvas');
@@ -55,7 +60,6 @@
             this.rotation = rotation || 0;
             this.spin = spin || (Math.random() - 0.5) * 0.1;
             this.alpha = 1;
-            this.decay = 0.98 + Math.random() * 0.01;
             this.gravity = 0.2;
             this.frictionAir = 0.99;
         }
@@ -109,7 +113,7 @@
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 3;
 
-        // Multiple bursts
+        // Multiple bursts from envelope
         burstConfetti(120, centerX, centerY);
         
         setTimeout(() => {
@@ -182,7 +186,7 @@
     function createFloatingHearts() {
         const heartsContainer = document.getElementById('floatingHearts');
         
-        for(let i = 0; i < 15; i++) {
+        for(let i = 0; i < 20; i++) {
             setTimeout(() => {
                 const heart = document.createElement('div');
                 heart.innerHTML = ['❤️', '💖', '💗', '💓', '💕', '💝'][Math.floor(Math.random() * 6)];
@@ -201,23 +205,43 @@
                 setTimeout(() => {
                     heart.remove();
                 }, 4000);
-            }, i * 200);
+            }, i * 150);
         }
     }
 
-    // Add floating hearts animation to stylesheet
-    const styleSheet = document.createElement("style");
-    styleSheet.textContent = `
-        @keyframes floatHeart {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(20deg);
-                opacity: 0;
-            }
-        }
-    `;
-    document.head.appendChild(styleSheet);
+    // Photo lightbox effect
+    function initPhotoLightbox() {
+        const photos = document.querySelectorAll('.photo');
+        photos.forEach(photo => {
+            photo.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const lightbox = document.createElement('div');
+                lightbox.style.position = 'fixed';
+                lightbox.style.top = '0';
+                lightbox.style.left = '0';
+                lightbox.style.width = '100%';
+                lightbox.style.height = '100%';
+                lightbox.style.backgroundColor = 'rgba(0,0,0,0.9)';
+                lightbox.style.zIndex = '10000';
+                lightbox.style.display = 'flex';
+                lightbox.style.alignItems = 'center';
+                lightbox.style.justifyContent = 'center';
+                lightbox.style.cursor = 'pointer';
+                
+                const img = document.createElement('img');
+                img.src = this.src;
+                img.style.maxWidth = '90%';
+                img.style.maxHeight = '90%';
+                img.style.borderRadius = '12px';
+                img.style.boxShadow = '0 0 30px rgba(255,255,255,0.3)';
+                
+                lightbox.appendChild(img);
+                document.body.appendChild(lightbox);
+                
+                lightbox.addEventListener('click', () => {
+                    lightbox.remove();
+                });
+            });
+        });
+    }
 })();

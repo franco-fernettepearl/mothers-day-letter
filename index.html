@@ -2,88 +2,365 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Mother's Day Letter 💌 - For My Amazing Mom</title>
-    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(145deg, #f5e6e8 0%, #e8d0d4 100%);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Quicksand', sans-serif;
+            padding: 40px 20px;
+        }
+
+        /* OA na margin sa page mismo */
+        .page-container {
+            padding-top: 150px;
+            padding-bottom: 300px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f0e0d0;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c44569;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="envelope-wrapper" id="envelopeWrapper">
-        <div class="envelope">
-            <div class="envelope-body"></div>
-            <div class="flap" id="flap"></div>
-            <div class="letter" id="letterContent">
-                <div class="letter-inner">
-                    <!-- Mom & Daughter Photo 1 -->
-                    <div class="photo-gallery">
-                        <img src="images/mom-daught1.jpg" alt="Mom and Daughter" class="photo main-photo">
-                    </div>
-                    
-                    <h2>💖 My Dearest Mom 💖</h2>
-                    
-                    <p>
-                        On this special Mother's Day, words can't fully capture how grateful I am for every hug, 
-                        every sacrifice, and every prayer you've whispered for me.
-                    </p>
-                    
-                    <!-- Mom & Daughter Photo 2 -->
-                    <div class="photo-gallery">
-                        <img src="images/mom-daught2.jpg" alt="Mom and Daughter smile" class="photo inline-photo">
-                    </div>
-                    
-                    <p>
-                        You are my first home, my soft place to land, and my strongest cheerleader. 
-                        Thank you for filling my life with warmth and unconditional love.
-                    </p>
-                    
-                    <!-- Family Photo 1 -->
-                    <div class="family-collage">
-                        <img src="images/family-pic.jpg" alt="Family portrait" class="photo family-photo">
-                    </div>
-                    
-                    <p>
-                        Every day I'm reminded of your strength, your kindness, and your beautiful soul. 
-                        You've taught me to dream big, love deeply, and always stay humble.
-                    </p>
-                    
-                    <!-- Family Photos 2 & 3 side by side -->
-                    <div class="photo-pair">
-                        <img src="images/family-pic2.jpeg" alt="Family moment" class="photo pair-photo">
-                        <img src="images/family-pic3.jpeg" alt="Family celebration" class="photo pair-photo">
-                    </div>
-                    
-                    <p>
-                        I look at our photos and see nothing but pure joy, genuine smiles, 
-                        and the beautiful bond we share. These memories are my greatest treasure.
-                    </p>
-                    
-                    <p>
-                        I love you more than all the stars in the sky. ❤️
-                    </p>
-                    
-                    <div class="signature">
-                        ~ With all my heart, your child ~
-                    </div>
-                    <div class="date">
-                        Mother's Day 2026
-                    </div>
+<div class="page-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 600px; margin: 0 auto;">
+    
+    <!-- Container for envelope and overlapping letter -->
+    <div style="position: relative; width: 500px; min-height: 400px; margin-bottom: 100px;">
+        
+        <!-- Envelope (stays in place) -->
+        <div id="envelopeWrapper" style="position: relative; width: 500px; height: 340px; cursor: pointer; z-index: 1;">
+            <div style="position: relative; width: 100%; height: 100%; border-radius: 12px; box-shadow: 0 25px 40px -12px rgba(0,0,0,0.3); overflow: visible;">
+                
+                <!-- Back of envelope -->
+                <div style="position: absolute; width: 100%; height: 100%; background: #81A6C6; z-index: 1; border-radius: 12px;"></div>
+                
+                <!-- Envelope Front Bottom -->
+                <div style="position: absolute; bottom: 0; width: 100%; height: 65%; background: #81A6C6; border-top: 3px solid #6d8faf; z-index: 2; border-radius: 0 0 12px 12px;"></div>
+                
+                <!-- Envelope Flap (Lid) -->
+                <div id="envelopeFlap" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #81A6C6; z-index: 10; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform-origin: top; cursor: pointer; clip-path: polygon(0% 0%, 100% 0%, 50% 48%);"></div>
+                
+                <!-- Seal -->
+                <div id="seal" style="position: absolute; bottom: 25px; right: 25px; width: 48px; height: 48px; background: linear-gradient(135deg, #e8c4a0 0%, #d4a373 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #8b5a2b; font-size: 26px; z-index: 20; pointer-events: none;">
+                    ❤️
                 </div>
+                
             </div>
-            <div class="seal">
-                ❤️
+        </div>
+        
+        <!-- Letter (overlaps the envelope, starts hidden) -->
+        <div id="letter" style="position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); background: white; border-radius: 12px; padding: 0; box-shadow: 0 20px 40px rgba(0,0,0,0.3); z-index: 15; width: 100%; max-height: 0; opacity: 0; overflow-y: auto; transition: all 0.7s cubic-bezier(0.34, 1.2, 0.64, 1); pointer-events: none;">
+            <div style="padding: 30px 25px; text-align: center;">
+                <!-- Mom & Daughter Photo 1 -->
+                <div style="margin: 15px 0; text-align: center;">
+                    <img src="images/mom-daught1.jpg" alt="Mom and Daughter" style="border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.15); max-width: 100%; max-height: 250px; border: 3px solid #ffb7c5; cursor: pointer;">
+                </div>
+                
+                <h2 style="color: #c44569; font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 20px; border-bottom: 3px solid #ffb7c5; display: inline-block; padding-bottom: 10px;">💖 My Dearest Mom 💖</h2>
+                
+                <p style="color: #4a2e2e; font-size: 1.1rem; line-height: 1.8; margin: 20px 0; font-weight: 500;">
+                    On this special Mother's Day, words can't fully capture how grateful I am for every hug, 
+                    every sacrifice, and every prayer you've whispered for me.
+                </p>
+                
+                <!-- Mom & Daughter Photo 2 -->
+                <div style="margin: 20px 0; text-align: center;">
+                    <img src="images/mom-daught2.jpg" alt="Mom and Daughter smile" style="border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.15); max-width: 100%; max-height: 230px; border: 3px solid #fce6b4; cursor: pointer;">
+                </div>
+                
+                <p style="color: #4a2e2e; font-size: 1.1rem; line-height: 1.8; margin: 20px 0; font-weight: 500;">
+                    You are my first home, my soft place to land, and my strongest cheerleader. 
+                    Thank you for filling my life with warmth and unconditional love.
+                </p>
+                
+                <!-- Family Photo 1 -->
+                <div style="margin: 20px 0;">
+                    <img src="images/family-pic.jpg" alt="Family portrait" style="border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.15); width: 100%; max-height: 300px; object-fit: cover; cursor: pointer;">
+                </div>
+                
+                <p style="color: #4a2e2e; font-size: 1.1rem; line-height: 1.8; margin: 20px 0; font-weight: 500;">
+                    Every day I'm reminded of your strength, your kindness, and your beautiful soul. 
+                    You've taught me to dream big, love deeply, and always stay humble.
+                </p>
+                
+                <!-- Family Photos 2 & 3 side by side -->
+                <div style="display: flex; gap: 15px; margin: 20px 0; justify-content: center; flex-wrap: wrap;">
+                    <img src="images/family-pic2.jpeg" alt="Family moment" style="flex: 1; min-width: 150px; max-height: 180px; object-fit: cover; border-radius: 12px; border: 3px solid #ffe0f0; cursor: pointer;">
+                    <img src="images/family-pic3.jpeg" alt="Family celebration" style="flex: 1; min-width: 150px; max-height: 180px; object-fit: cover; border-radius: 12px; border: 3px solid #ffe0f0; cursor: pointer;">
+                </div>
+                
+                <p style="color: #4a2e2e; font-size: 1.1rem; line-height: 1.8; margin: 20px 0; font-weight: 500;">
+                    I look at our photos and see nothing but pure joy, genuine smiles, 
+                    and the beautiful bond we share. These memories are my greatest treasure.
+                </p>
+                
+                <p style="color: #4a2e2e; font-size: 1.2rem; line-height: 1.8; margin: 25px 0; font-weight: 600;">
+                    I love you more than all the stars in the sky. ❤️
+                </p>
+                
+                <div style="margin-top: 25px; font-style: italic; font-weight: 600; color: #b3415c; font-size: 1.2rem;">
+                    ~ With all my heart, your child ~
+                </div>
+                <div style="margin-top: 15px; font-size: 0.9rem; color: #b5838a; letter-spacing: 2px;">
+                    Mother's Day 2026
+                </div>
             </div>
         </div>
     </div>
-    <button class="btn-hint" id="openBtn">
-        <span>✉️ Open Letter ✉️</span>
+    
+    <!-- Open Button -->
+    <button id="openBtn" style="background: linear-gradient(135deg, #c44569 0%, #a63450 100%); border: none; padding: 16px 50px; border-radius: 60px; font-weight: 700; font-size: 1.3rem; color: white; font-family: 'Quicksand', sans-serif; cursor: pointer; box-shadow: 0 8px 0 #6e1e35; letter-spacing: 3px; transition: all 0.3s ease; margin: 40px 0;">
+        ✉️ OPEN LETTER ✉️
     </button>
 </div>
 
-<canvas id="confettiCanvas"></canvas>
-<div class="floating-hearts" id="floatingHearts"></div>
+<canvas id="confettiCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000;"></canvas>
+<div id="floatingHearts" style="position: fixed; bottom: 0; left: 0; width: 100%; pointer-events: none; z-index: 999;"></div>
 
-<script src="js/script.js"></script>
+<script>
+    (function() {
+        const wrapper = document.getElementById('envelopeWrapper');
+        const openBtn = document.getElementById('openBtn');
+        const letter = document.getElementById('letter');
+        const flap = document.getElementById('envelopeFlap');
+        const seal = document.getElementById('seal');
+        let isOpened = false;
+
+        function openLetter() {
+            if(isOpened) return;
+            isOpened = true;
+            
+            // Flap opens
+            flap.style.transform = 'rotateX(180deg)';
+            flap.style.opacity = '0';
+            flap.style.pointerEvents = 'none';
+            
+            // Seal fades
+            seal.style.transform = 'scale(0.5)';
+            seal.style.opacity = '0';
+            
+            // Letter expands with scroll
+            letter.style.maxHeight = '600px';
+            letter.style.opacity = '1';
+            letter.style.pointerEvents = 'auto';
+            letter.style.overflowY = 'auto';
+            
+            // Super OA na scroll para kita ang buong letter
+            setTimeout(() => {
+                const letterRect = letter.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                const scrollPosition = window.pageYOffset + letterRect.top - 100;
+                
+                window.scrollTo({
+                    top: scrollPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Add extra padding after scroll
+                setTimeout(() => {
+                    document.body.style.paddingBottom = '300px';
+                }, 500);
+            }, 200);
+            
+            // Confetti and hearts
+            startConfetti();
+            createFloatingHearts();
+        }
+
+        openBtn.addEventListener('click', openLetter);
+        flap.addEventListener('click', openLetter);
+
+        // Confetti System
+        const canvas = document.getElementById('confettiCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animationId = null;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor(x, y, vx, vy, size, color) {
+                this.x = x;
+                this.y = y;
+                this.vx = vx;
+                this.vy = vy;
+                this.size = size;
+                this.color = color;
+                this.alpha = 1;
+                this.gravity = 0.2;
+            }
+
+            update() {
+                this.vy += this.gravity;
+                this.x += this.vx;
+                this.y += this.vy;
+                this.alpha *= 0.98;
+                return this.y < canvas.height + 100 && this.alpha > 0.02;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+                ctx.restore();
+            }
+        }
+
+        function addConfetti(count) {
+            const colors = ['#ff4d6d', '#ff8fa3', '#ffb3c6', '#ffc2d1', '#ffd9e8', '#fbc4c0', '#f8ad9d'];
+            for(let i = 0; i < count; i++) {
+                const rect = wrapper.getBoundingClientRect();
+                const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 120;
+                const y = rect.top + rect.height / 3;
+                const vx = (Math.random() - 0.5) * 10;
+                const vy = (Math.random() - 0.5) * 10 - 6;
+                const size = 6 + Math.random() * 10;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particles.push(new Particle(x, y, vx, vy, size, color));
+            }
+        }
+
+        function startConfetti() {
+            addConfetti(180);
+            setTimeout(() => addConfetti(120), 200);
+            setTimeout(() => addConfetti(100), 400);
+            
+            let count = 0;
+            const interval = setInterval(() => {
+                if(count > 18) clearInterval(interval);
+                for(let i = 0; i < 15; i++) {
+                    const x = Math.random() * canvas.width;
+                    const y = -10;
+                    const vx = (Math.random() - 0.5) * 5;
+                    const vy = 3 + Math.random() * 6;
+                    const size = 5 + Math.random() * 8;
+                    const color = ['#ffb7c5', '#ff9eb5', '#ffc8dd'][Math.floor(Math.random() * 3)];
+                    particles.push(new Particle(x, y, vx, vy, size, color));
+                }
+                count++;
+            }, 500);
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let hasParticles = false;
+                for(let i = particles.length - 1; i >= 0; i--) {
+                    if(particles[i].update()) {
+                        particles[i].draw();
+                        hasParticles = true;
+                    } else {
+                        particles.splice(i, 1);
+                    }
+                }
+                if(hasParticles) {
+                    animationId = requestAnimationFrame(animate);
+                } else {
+                    cancelAnimationFrame(animationId);
+                }
+            }
+            
+            if(animationId) cancelAnimationFrame(animationId);
+            animate();
+        }
+
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            for(let i = 0; i < 25; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = ['❤️', '💖', '💗', '💓', '💕', '💝'][Math.floor(Math.random() * 6)];
+                    heart.style.position = 'fixed';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.bottom = '-20px';
+                    heart.style.fontSize = (25 + Math.random() * 35) + 'px';
+                    heart.style.opacity = '0.8';
+                    heart.style.pointerEvents = 'none';
+                    heart.style.zIndex = '1000';
+                    heart.style.animation = `floatHeart ${3 + Math.random() * 3}s linear forwards`;
+                    
+                    container.appendChild(heart);
+                    setTimeout(() => heart.remove(), 4000);
+                }, i * 150);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatHeart {
+                0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+                100% { transform: translateY(-100vh) rotate(20deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        function initLightbox() {
+            const photos = document.querySelectorAll('img');
+            photos.forEach(photo => {
+                photo.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const overlay = document.createElement('div');
+                    overlay.style.position = 'fixed';
+                    overlay.style.top = '0';
+                    overlay.style.left = '0';
+                    overlay.style.width = '100%';
+                    overlay.style.height = '100%';
+                    overlay.style.backgroundColor = 'rgba(0,0,0,0.95)';
+                    overlay.style.zIndex = '10000';
+                    overlay.style.display = 'flex';
+                    overlay.style.alignItems = 'center';
+                    overlay.style.justifyContent = 'center';
+                    overlay.style.cursor = 'pointer';
+                    
+                    const img = document.createElement('img');
+                    img.src = this.src;
+                    img.style.maxWidth = '90%';
+                    img.style.maxHeight = '90%';
+                    img.style.borderRadius = '12px';
+                    
+                    overlay.appendChild(img);
+                    document.body.appendChild(overlay);
+                    overlay.addEventListener('click', () => overlay.remove());
+                });
+            });
+        }
+        
+        setTimeout(initLightbox, 100);
+    })();
+</script>
+
 </body>
 </html>

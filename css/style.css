@@ -1,12 +1,280 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    width: 100vw;
+    background: linear-gradient(145deg, #f5e6e8 0%, #e8d0d4 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Quicksand', 'Segoe UI', system-ui, sans-serif;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+    z-index: 10;
+    width: auto;
+    max-width: 90vw;
+}
+
+/* Envelope Wrapper */
+.envelope-wrapper {
+    position: relative;
+    width: min(380px, 85vw);
+    height: min(260px, 58vw);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.envelope-wrapper:hover {
+    transform: scale(1.02);
+}
+
+/* Main Envelope Container */
+.envelope {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.25);
+    overflow: visible;
+}
+
+/* Envelope Back (base layer) */
+.envelope-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #81A6C6;
+    z-index: 1;
+    border-radius: 8px;
+}
+
+/* Envelope Front Container */
+.envelope-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* Envelope Body Front (bottom part) */
+.envelope-body-front {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 65%;
+    background: #81A6C6;
+    border-top: 2px solid #6d8faf;
+    z-index: 2;
+    border-radius: 0 0 8px 8px;
+    pointer-events: auto;
+}
+
+/* Decorative lines on envelope body */
+.envelope-body-front::before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    right: 20px;
+    height: 2px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+}
+
+.envelope-body-front::after {
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: 20px;
+    right: 20px;
+    height: 2px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px;
+}
+
+/* Envelope Flap (lid) */
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #81A6C6;
+    z-index: 10;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: top;
+    cursor: pointer;
+    clip-path: polygon(0% 0%, 100% 0%, 50% 50%);
+    pointer-events: auto;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+}
+
+/* OPEN state: flap rotates up */
+.envelope-wrapper.open .envelope-flap {
+    transform: rotateX(180deg);
+}
+
+/* Letter inside (hidden initially) */
+.letter {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    width: calc(100% - 24px);
+    background: white;
+    border-radius: 6px 6px 10px 10px;
+    padding: 0;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+    max-height: 220px;
+    overflow-y: auto;
+    cursor: default;
+}
+
+/* After opening: letter slides up */
+.envelope-wrapper.open .letter {
+    transform: translateX(-50%) translateY(-55px);
+    opacity: 1;
+    pointer-events: auto;
+    box-shadow: 0 20px 35px -12px rgba(0,0,0,0.25);
+}
+
+/* Adjust letter position on very small screens */
+@media (max-width: 480px) {
+    .envelope-wrapper.open .letter {
+        transform: translateX(-50%) translateY(-45px);
+    }
+}
+
+/* Letter inner content */
+.letter-inner {
+    padding: 20px 16px;
+    text-align: center;
+}
+
+.letter h2 {
+    color: #c44569;
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-size: clamp(1rem, 5vw, 1.3rem);
+    margin-bottom: 12px;
+    border-bottom: 2px solid #ffb7c5;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.letter p {
+    color: #4a2e2e;
+    font-size: clamp(0.7rem, 3.5vw, 0.85rem);
+    line-height: 1.5;
+    margin: 12px 0;
+    font-weight: 500;
+}
+
+.letter .signature {
+    margin-top: 16px;
+    font-style: italic;
+    font-weight: 600;
+    color: #b3415c;
+    font-size: clamp(0.8rem, 4vw, 0.9rem);
+}
+
+.letter .date {
+    margin-top: 12px;
+    font-size: clamp(0.6rem, 3vw, 0.7rem);
+    color: #b5838a;
+    letter-spacing: 1px;
+}
+
+/* Seal decoration */
+.seal {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: clamp(30px, 8vw, 38px);
+    height: clamp(30px, 8vw, 38px);
+    background: linear-gradient(135deg, #e8c4a0 0%, #d4a373 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8b5a2b;
+    font-size: clamp(16px, 5vw, 20px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 20;
+    pointer-events: none;
+    transition: all 0.3s;
+    border: 1px solid rgba(255,255,200,0.5);
+}
+
+.envelope-wrapper.open .seal {
+    transform: scale(0.8);
+    opacity: 0.5;
+}
+
+/* Open Button */
+.btn-open {
+    background: linear-gradient(135deg, #c44569 0%, #a63450 100%);
+    border: none;
+    padding: clamp(10px, 3vw, 14px) clamp(28px, 8vw, 40px);
+    border-radius: 60px;
+    font-weight: 700;
+    font-size: clamp(0.85rem, 4vw, 1.1rem);
+    color: white;
+    font-family: 'Quicksand', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 0 #6e1e35;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+    .btn-open {
+        white-space: normal;
+        padding: 10px 20px;
+        letter-spacing: 1px;
+    }
+}
+
+.btn-open:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 0 #6e1e35;
+    background: linear-gradient(135deg, #d45578 0%, #b83d5e 100%);
+}
+
+.btn-open:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #6e1e35;
+}
+
 /* Photo Gallery Styling */
 .photo-gallery {
-    margin: 15px 0;
+    margin: 12px 0;
     text-align: center;
 }
 
 .photo {
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     max-width: 100%;
     height: auto;
@@ -15,75 +283,99 @@
 
 .photo:hover {
     transform: scale(1.02);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.18);
 }
 
 .main-photo {
-    max-height: 200px;
+    max-height: clamp(130px, 30vw, 180px);
     width: auto;
     border: 3px solid #ffb7c5;
     margin-bottom: 10px;
 }
 
 .inline-photo {
-    max-height: 180px;
+    max-height: clamp(110px, 25vw, 160px);
     width: auto;
-    margin: 10px 0;
+    margin: 8px 0;
     border: 2px solid #fce6b4;
 }
 
 .family-photo {
     width: 100%;
-    max-height: 220px;
+    max-height: clamp(140px, 35vw, 200px);
     object-fit: cover;
     margin: 10px 0;
 }
 
 .family-collage {
-    margin: 15px 0;
+    margin: 12px 0;
 }
 
 .photo-pair {
     display: flex;
-    gap: 12px;
-    margin: 15px 0;
+    gap: 10px;
+    margin: 12px 0;
     justify-content: center;
     flex-wrap: wrap;
 }
 
 .pair-photo {
     flex: 1;
-    min-width: 120px;
-    max-height: 150px;
+    min-width: 80px;
+    max-height: clamp(100px, 25vw, 130px);
     object-fit: cover;
     border: 2px solid #ffe0f0;
 }
 
-/* Responsive adjustments for photos */
-@media (max-width: 480px) {
-    .photo-pair {
-        flex-direction: column;
-        gap: 10px;
+/* Scrollbar styling for letter */
+.letter::-webkit-scrollbar {
+    width: 5px;
+}
+
+.letter::-webkit-scrollbar-track {
+    background: #f0e0d0;
+    border-radius: 10px;
+}
+
+.letter::-webkit-scrollbar-thumb {
+    background: #c44569;
+    border-radius: 10px;
+}
+
+/* Animation for envelope opening */
+@keyframes gentlePop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+.envelope-wrapper.open .envelope {
+    animation: gentlePop 0.5s ease;
+}
+
+/* Floating hearts animation */
+@keyframes floatHeart {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.8;
     }
-    
-    .pair-photo {
-        width: 100%;
-        max-height: 200px;
-    }
-    
-    .main-photo {
-        max-height: 150px;
-    }
-    
-    .inline-photo {
-        max-height: 140px;
+    100% {
+        transform: translateY(-100vh) rotate(20deg);
+        opacity: 0;
     }
 }
 
-/* Optional: Add a lightbox effect for photos */
-.photo {
-    cursor: pointer;
-    transition: all 0.3s ease;
+/* Additional centering for very large screens */
+@media (min-width: 1920px) {
+    .container {
+        transform: scale(1.1);
+    }
 }
 
-/* You can add a simple lightbox with JavaScript if desired */
+/* Fix for tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .envelope-wrapper {
+        width: 380px;
+        height: 260px;
+    }
+}
